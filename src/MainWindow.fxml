@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="pAnchor" prefHeight="200.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainWindow">
+   <children>
+      <Button fx:id="bLoad" layoutX="388.0" layoutY="94.0" mnemonicParsing="false" text="Load" visible="false" />
+      <Button fx:id="bOpen" cancelButton="true" layoutX="386.0" layoutY="144.0" mnemonicParsing="false" text="Open" />
+      <Text layoutX="31.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Open and choose directory, which constains Jar file or Class file." />
+      <Text fx:id="tPath" layoutX="42.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+   </children>
+</AnchorPane>
