@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="refleksja">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../refleksja/out/artifacts/refleksja_jar/refleksja.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

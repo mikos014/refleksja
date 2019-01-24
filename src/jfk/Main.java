@@ -78,11 +78,8 @@ public class Main extends Application
 
         bLoad.setOnAction(event ->
         {
-            try {
-                new Controller().makeScene(String.valueOf(chosenFile));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            new Controller().makeScene(String.valueOf(chosenFile));
+
         });
 
         root.getChildren().addAll(lInfo, lPath, bOpen, bLoad);

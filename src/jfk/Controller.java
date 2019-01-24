@@ -29,10 +29,10 @@ public class Controller
     private String pathOfDir, selectedMethod;
     private File directory;
     private LinkedList<String> listOfPaths;
-    private Method[] methods;
     private Map<String, Class> classes;
 
-    public void makeScene(String path) throws IOException {
+    public void makeScene(String path)
+    {
         Stage window = new Stage();
         GridPane node = new GridPane();
 
@@ -94,7 +94,7 @@ public class Controller
             if(selectedMethod != null)
             {
                 Class<?> c = classes.get(selectedMethod.substring(1,selectedMethod.length() - 1));
-                String className = c.getName().toString();
+                String className = c.getName();
                 ICallable callable = null;
 
                 if (!ICallable.class.isAssignableFrom(c))
@@ -120,9 +120,9 @@ public class Controller
                 }
 
 
-                switch (selectedMethod)
+                switch (selectedMethod.substring(1, selectedMethod.length() - 1))
                 {
-                    case "[factorial]":
+                    case "factorial":
                         int i = 0;
                         try
                         {
@@ -136,22 +136,22 @@ public class Controller
                             tfResult.setText(String.valueOf(callable.factorial(i)));
                         break;
 
-                    case "[concat]":
+                    case "concat":
                         if(tfParam1 != null && tfParam2 != null)
-                            tfResult.setText(callable.concat(tfParam1.getText().toString(), tfParam2.getText().toString()));
+                            tfResult.setText(callable.concat(tfParam1.getText(), tfParam2.getText()));
                         else
                             taData.appendText("Method has two parameters type: 'String'\n");
                         break;
 
-                    case "[printMyGroup]":
+                    case "printMyGroup":
                         tfResult.setText(callable.printMyGroup());
                         break;
 
-                    case "[compareString]":
+                    case "compareString":
                         boolean answer;
                         if(tfParam1 != null && tfParam2 != null)
                         {
-                            answer = callable.compareString(tfParam1.getText().toString(), tfParam2.getText().toString());
+                            answer = callable.compareString(tfParam1.getText(), tfParam2.getText());
                             tfResult.setText(String.valueOf(answer));
                         }
                         else
@@ -170,10 +170,10 @@ public class Controller
         {
             selectedMethod = lvMethods.getSelectionModel().getSelectedItems().toString();
 
-            System.out.println(selectedMethod.toString());
-            switch (selectedMethod)
+            System.out.println(selectedMethod.substring(1, selectedMethod.length() - 1));
+            switch (selectedMethod.substring(1, selectedMethod.length() - 1))
             {
-                case "[factorial]":
+                case "factorial":
                     tfParam1.setEditable(true);
                     tfParam2.setEditable(false);
                     tfParam1.setPromptText("Parameter1");
@@ -181,13 +181,13 @@ public class Controller
                     tfParam1.setText("");
                     tfParam2.setText("");
                     break;
-                case "[concat]":
+                case "concat":
                     tfParam1.setEditable(true);
                     tfParam2.setEditable(true);
                     tfParam1.setPromptText("Parameter1");
                     tfParam2.setPromptText("Parameter2");
                     break;
-                case "[printMyGroup]":
+                case "printMyGroup":
                     tfParam1.setEditable(false);
                     tfParam2.setEditable(false);
                     tfParam1.setText("");
@@ -195,7 +195,7 @@ public class Controller
                     tfParam1.setPromptText("");
                     tfParam2.setPromptText("");
                     break;
-                case "[compareString]":
+                case "compareString":
                     tfParam1.setEditable(true);
                     tfParam2.setEditable(true);
                     tfParam1.setPromptText("Parameter1");
@@ -234,7 +234,7 @@ public class Controller
 
             if(i == 0)
             {
-                taData.appendText("W tym folderze brak pliku z rozszerzeniem 'jar' oraz 'class'\n");
+                taData.appendText("W tym folderze brak pliku z rozszerzeniem 'jar'\n");
                 jarclassExist = false;
             }
             else
@@ -285,10 +285,10 @@ public class Controller
                             if(!description.description().equals(methods[i].getName()))
                                 continue;
 
-                            classes.put(methods[i].getName().toString(), c);
+                            classes.put(methods[i].getName(), c);
                             lvMethods.getItems().add(methods[i].getName());
 
-                            taData.appendText("Method '" + methods[i].getName() + "' requires " + methods[i].getParameterCount() + "-parametres type:" + methods[i].getReturnType() + "\n");
+                            taData.appendText("Method '" + methods[i].getName() + "' requires " + methods[i].getParameterCount() + "-parametres type:" + methods[i].getParameterTypes() + "\n");
 //                            System.out.println("Method '" + description.description() + "' requires " + methods[i].getParameterCount() + " type:" + methods[i].getParameterTypes());
 //                            System.out.println(c + " : method:" + methods[i]);
                         }
