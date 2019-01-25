@@ -77,7 +77,7 @@ public class Controller
         tfParam1.setEditable(true);
         tfParam2.setEditable(true);
 
-        if (isDirContains())           //czy w folderze jest plik .jar lub .class
+        if (isDirContains())           //czy w folderze jest plik .jar
         {
             try
             {
@@ -119,6 +119,7 @@ public class Controller
                     e.printStackTrace();
                 }
 
+                selectedMethod.substring(1, selectedMethod.length() - 1);
 
                 switch (selectedMethod.substring(1, selectedMethod.length() - 1))
                 {
@@ -132,8 +133,10 @@ public class Controller
                         {
                             taData.appendText("Method has one parameter type: 'int'\n");
                         }
-                        if (i!=0)
+                        if (i < 17 && i >= 0)
                             tfResult.setText(String.valueOf(callable.factorial(i)));
+                        else
+                            taData.appendText("Sorry, method type is 'int' it causes counting on param less than 17, but bigger or equal 0\n");
                         break;
 
                     case "concat":
@@ -174,6 +177,7 @@ public class Controller
             switch (selectedMethod.substring(1, selectedMethod.length() - 1))
             {
                 case "factorial":
+                    tfResult.setText("");
                     tfParam1.setEditable(true);
                     tfParam2.setEditable(false);
                     tfParam1.setPromptText("Parameter1");
@@ -182,12 +186,14 @@ public class Controller
                     tfParam2.setText("");
                     break;
                 case "concat":
+                    tfResult.setText("");
                     tfParam1.setEditable(true);
                     tfParam2.setEditable(true);
                     tfParam1.setPromptText("Parameter1");
                     tfParam2.setPromptText("Parameter2");
                     break;
                 case "printMyGroup":
+                    tfResult.setText("");
                     tfParam1.setEditable(false);
                     tfParam2.setEditable(false);
                     tfParam1.setText("");
@@ -275,6 +281,8 @@ public class Controller
 
                         Method[] methods = c.getDeclaredMethods();
 
+                        Class<?>[] pType;
+
                         if (!c.isAnnotationPresent(Description.class))
                             continue;
 
@@ -282,13 +290,27 @@ public class Controller
 
                         for (int i = 0; i < methods.length; i++)
                         {
-                            if(!description.description().equals(methods[i].getName()))
+//                            zakladam, że metoda ktora chce uruchomic musi byc wspomniana w "description" classy
+                            if(!description.description().contains(methods[i].getName()))
                                 continue;
 
                             classes.put(methods[i].getName(), c);
                             lvMethods.getItems().add(methods[i].getName());
 
-                            taData.appendText("Method '" + methods[i].getName() + "' requires " + methods[i].getParameterCount() + "-parametres type:" + methods[i].getParameterTypes() + "\n");
+                            taData.appendText("Method '" + methods[i].getName() + "' requires " + methods[i].getParameterCount() + "-parametres type: ");
+
+                            pType = methods[i].getParameterTypes();
+
+                            if(pType.length == 0)
+                                taData.appendText(" --- ");
+
+                            for (int j = 0; j < pType.length; j++)
+                            {
+                                taData.appendText(" - " + pType[j] + " - ");
+                            }
+
+
+                            taData.appendText("\n");
 //                            System.out.println("Method '" + description.description() + "' requires " + methods[i].getParameterCount() + " type:" + methods[i].getParameterTypes());
 //                            System.out.println(c + " : method:" + methods[i]);
                         }
